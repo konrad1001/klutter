@@ -27,6 +27,9 @@ class CreateCommand extends Command {
 
     targetDir.create(recursive: true);
 
-    IOSTemplate().render(targetDir, {});
+    IOSTemplate().render(targetDir,
+        {"PROJECT_NAME": projectName, "BUNDLE_IDENTIFIER": projectName});
+
+    print("Finished creating a klutter project for the target: iOS");
   }
 }
