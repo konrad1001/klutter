@@ -2,6 +2,9 @@
     "files": [
       "ios/Runner.xcodeproj/project.pbxproj",
       "ios/Runner/ios_templateApp.swift",
-      "ios/Runner/ContentView.swift"
+      "ios/Runner/ContentView.swift",
+
+      "pubspec.yaml.templ",
+      "README.md.templ"
     ]
   }
