@@ -13,14 +13,29 @@ class DevicesCommand extends Command {
   @override
   final description = "List available devices (ios)";
 
-  @override
-  FutureOr<dynamic>? run() {
-    _devices();
+  DevicesCommand() {
+    argParser.addFlag(
+      "real",
+      abbr: "r",
+      help:
+          "Whether to search for real devices as well as simulators (defaults to false)",
+      defaultsTo: false,
+      negatable: false,
+    );
   }
 
-  void _devices() async {
+  @override
+  FutureOr<dynamic>? run() {
+    final simOnly = !(argResults?.flag("real") ?? false);
+
+    _devices(simOnly);
+  }
+
+  void _devices(bool simOnly) async {
     print("Searching for devices");
-    final result = await _discoverer.getAllAvailableDevices();
+    final result = await _discoverer.getAllAvailableDevices(
+      filter: simOnly ? .simOnly : null,
+    );
 
     print(result);
   }

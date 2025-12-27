@@ -9,7 +9,7 @@ class CreateCommand extends Command {
   final name = "create";
 
   @override
-  final description = "Create a new klutter project";
+  final description = "Create a new Klutter project";
 
   CreateCommand() {
     argParser.addOption("project-name", help: "Set the project name");
@@ -22,14 +22,18 @@ class CreateCommand extends Command {
     _create(projectName);
   }
 
-  void _create(String projectName) {
+  void _create(String projectName) async {
     final targetDir = Directory(projectName);
 
     targetDir.create(recursive: true);
 
-    IOSTemplate().render(targetDir,
-        {"PROJECT_NAME": projectName, "BUNDLE_IDENTIFIER": projectName});
+    final filesWritten = await Template().render(targetDir, {
+      "PROJECT_NAME": projectName,
+      "BUNDLE_IDENTIFIER": projectName,
+    });
 
-    print("Finished creating a klutter project for the target: iOS");
+    print(
+      "Finished creating a klutter project for. Wrote $filesWritten files.",
+    );
   }
 }

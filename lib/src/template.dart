@@ -1,28 +1,31 @@
 import 'dart:convert';
 import 'dart:io';
 
-abstract class Template {
-  String get templateDirectory;
-  String get targetPrefix;
+import 'package:mini_flutter_tool/src/environment.dart';
 
-  Future<int> render(
-    Directory directory,
-    Map<String, Object?> context,
-  ) async {
-    final srcDir = Directory(templateDirectory);
+class Template {
+  final templateDirectory = "templates";
 
-    final manifest = File('templates/template_manifest.json');
+  Future<int> render(Directory directory, Map<String, Object?> context) async {
+    final root = Environment.root;
+
+    if (root == null) {
+      throw StateError("Klutter root not set!");
+    }
+
+    final manifest = File('$root/templates/template_manifest.json');
     final files = (jsonDecode(manifest.readAsStringSync())['files'] as List)
         .cast<String>();
 
-    print(files);
-
     int written = 0;
     String targetDir = directory.path;
-    print(targetDir);
 
-    for (final relativePath in files) {
-      final src = File('$templateDirectory/$relativePath');
+    for (var relativePath in files) {
+      final src = File('$root/$templateDirectory/$relativePath');
+
+      if (relativePath.endsWith(".templ")) {
+        relativePath = relativePath.substring(0, relativePath.length - 6);
+      }
       final dst = File('$targetDir/$relativePath');
 
       dst.parent.createSync(recursive: true);
@@ -38,11 +41,4 @@ abstract class Template {
 
     return written;
   }
-}
-
-class IOSTemplate extends Template {
-  @override
-  final templateDirectory = "templates";
-  @override
-  final targetPrefix = "ios";
 }

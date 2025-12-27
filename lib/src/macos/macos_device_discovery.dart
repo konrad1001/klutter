@@ -7,19 +7,20 @@ class MacosDeviceDiscovery extends DeviceDiscovery {
   final _xcode = Xcode();
 
   @override
-  Future<List<Device>> getAllAvailableDevices() async {
-    final results = await Future.wait([
-      _getAvailableIOSSimulators(),
-      _getAvailableIOSDevices(),
-    ]);
+  Future<List<Device>> getAllAvailableDevices({DeviceFilters? filter}) async {
+    if (filter == .simOnly) {
+      return await _getAvailableIOSSimulators();
+    } else {
+      final results = await Future.wait([
+        _getAvailableIOSSimulators(),
+        _getAvailableIOSDevices(),
+      ]);
 
-    final simulators = results[0] as List<IOSSimulator>;
-    final devices = results[1] as List<IOSDevice>;
+      final simulators = results[0] as List<IOSSimulator>;
+      final devices = results[1] as List<IOSDevice>;
 
-    return <Device>[
-      ...simulators,
-      ...devices,
-    ];
+      return <Device>[...simulators, ...devices];
+    }
   }
 
   Future<List<IOSSimulator>> _getAvailableIOSSimulators() async {

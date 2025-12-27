@@ -1,2 +1,22 @@
-dart "lib/executable.dart" "$@"
+#!/usr/bin/env bash
+set -e
+
+# Resolve the real path of this script (handles symlinks)
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]; do
+  DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+BIN_DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+
+# Project root (bin/..)
+KLUTTER_ROOT="$(cd "$BIN_DIR/.." && pwd)"
+export KLUTTER_ROOT="$KLUTTER_ROOT"
+
+# Dart entrypoint
+DART_ENTRY="$KLUTTER_ROOT/lib/executable.dart"
+
+
+exec dart "$DART_ENTRY" "$@"
 
