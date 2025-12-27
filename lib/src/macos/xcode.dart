@@ -23,6 +23,66 @@ class Xcode {
     if (result.exitCode != 0) {
       print(result.stderr);
     }
+  }
+
+  Future<void> install({
+    required String destination,
+    required String workingDirectory,
+  }) async {
+    final result = await Process.run("xcrun", [
+      "simctl",
+      "install",
+      "booted",
+      destination,
+    ], workingDirectory: workingDirectory);
+
+    if (result.exitCode != 0) {
+      throw Exception("Error installing project ${result.stderr}");
+    }
+
+    print(result.stdout);
+  }
+
+  Future<void> launch({
+    required String bundleId,
+    required String workingDirectory,
+  }) async {
+    final result = await Process.run("xcrun", [
+      "simctl",
+      "launch",
+      "booted",
+      bundleId,
+    ], workingDirectory: workingDirectory);
+
+    if (result.exitCode != 0) {
+      print(result.stderr);
+    }
+
+    print(result.stdout);
+  }
+
+  Future<void> bootSimulator({
+    required String id,
+    required String workingDirectory,
+    bool withOpen = true,
+  }) async {
+    final result = await Process.run("xcrun", [
+      "simctl",
+      "boot",
+      id,
+    ], workingDirectory: workingDirectory);
+
+    if (result.exitCode != 0) {
+      if (result.exitCode == 149) {
+        // Device is already booted.
+      } else {
+        print(result.stderr);
+      }
+    }
+
+    if (withOpen) {
+      Process.run("open", ["-a", "Simulator"]);
+    }
 
     print(result.stdout);
   }
@@ -69,5 +129,29 @@ class Xcode {
       }
     }
     return null;
+  }
+
+  Future<String?> getBundleIdentifier({
+    required String workingDirectory,
+  }) async {
+    final result = await Process.run('xcodebuild', [
+      '-project',
+      'Runner.xcodeproj',
+      '-scheme',
+      'Runner',
+      '-showBuildSettings',
+    ], workingDirectory: workingDirectory);
+
+    if (result.exitCode != 0) {
+      print(result.stderr);
+      return null;
+    }
+
+    final output = result.stdout as String;
+    final match = RegExp(
+      r'^\s*PRODUCT_BUNDLE_IDENTIFIER = (.+)$',
+      multiLine: true,
+    ).firstMatch(output);
+    return match?.group(1)?.trim();
   }
 }

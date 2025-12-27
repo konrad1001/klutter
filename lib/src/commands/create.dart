@@ -33,7 +33,7 @@ class CreateCommand extends Command {
     });
 
     print(
-      "Finished creating a klutter project for. Wrote $filesWritten files.",
+      "Finished creating a new klutter project. Wrote $filesWritten files.",
     );
   }
 }
