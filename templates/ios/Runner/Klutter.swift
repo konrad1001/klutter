@@ -10,11 +10,11 @@ import SwiftUI
 internal import Combine
 
 struct DartApp: Codable {
-    let backgroundColor: String
+    let backgroundColour: String
     
-    func getBackgroundColor() -> Color {
+    func getBackgroundColour() -> Color {
         // Parse hex color
-        let hex = backgroundColor.trimmingCharacters(in: CharacterSet(charactersIn: "#"))
+        let hex = backgroundColour.trimmingCharacters(in: CharacterSet(charactersIn: "#"))
         var rgb: UInt64 = 0
         Scanner(string: hex).scanHexInt64(&rgb)
         
@@ -37,13 +37,7 @@ class KlutterEngine: ObservableObject {
     }
     
     private func loadDartApp() {
-        // In real Flutter, this would:
-        // 1. Load Flutter.framework
-        // 2. Load App.framework (your compiled Dart)
-        // 3. Initialize the Dart VM
-        // 4. Call main()
-        
-        // For our MVP, we load JSON from bundle
+        // Load JSON from bundle
         guard let url = Bundle.main.url(forResource: "app", withExtension: "json") else {
             error = "Could not find app.json in bundle"
             isLoading = false
@@ -81,7 +75,7 @@ struct KlutterView: View {
                         .padding()
                 }
             } else if let app = engine.app {
-                app.getBackgroundColor()
+                app.getBackgroundColour()
                     .ignoresSafeArea()
                     .overlay(
                         VStack {

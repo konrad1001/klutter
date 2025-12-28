@@ -27,20 +27,28 @@ class BuildCommand extends Command {
 
     // Check for pubspec
     if (!_pubspecExists(Directory.current)) {
-      throw Exception("Invalid repository for build");
+      throw Exception(
+        "No pubspec.yaml found! This may not be a klutter repository.",
+      );
+    }
+
+    // Check for main.dart
+    if (!_mainExists(Directory.current)) {
+      throw Exception(
+        "No main.dart found! This may not be a klutter repository.",
+      );
     }
 
     final iosDir = Directory("ios");
     final runnerDir = Directory("ios/Runner");
 
     // Build project
-    await Process.run("klutter", [
+    final compile = await Process.run("klutter", [
       "compile",
-      "main.dart",
+      "lib/main.dart",
       "-d",
       runnerDir.path,
     ]);
-    print("Wrote app.json");
 
     // Build xcode
     await _xcode.build(destination: "iPhone 17", workingDirectory: iosDir.path);
@@ -50,6 +58,11 @@ class BuildCommand extends Command {
 
   bool _pubspecExists(Directory projectDir) {
     final file = File('${projectDir.path}/pubspec.yaml');
+    return file.existsSync();
+  }
+
+  bool _mainExists(Directory projectDir) {
+    final file = File('${projectDir.path}/lib/main.dart');
     return file.existsSync();
   }
 }

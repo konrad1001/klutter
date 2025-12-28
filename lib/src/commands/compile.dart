@@ -38,6 +38,6 @@ class CompileCommand extends Command {
   }
 
   void _compile(String source, String? destination) async {
-    await _compiler.compile(source: source, destination: destination);
+    await _compiler.compile(source, destination);
   }
 }

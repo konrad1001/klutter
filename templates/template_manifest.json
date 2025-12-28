@@ -4,6 +4,8 @@
       "ios/Runner/ios_templateApp.swift",
       "ios/Runner/Klutter.swift",
 
+      "lib/main.dart.templ",
+
       "pubspec.yaml.templ",
       "README.md.templ"
     ]
