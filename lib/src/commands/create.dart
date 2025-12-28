@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:mini_flutter_tool/src/template.dart';
+import 'package:Klutter/src/template.dart';
 
 class CreateCommand extends Command {
   @override
@@ -17,7 +17,7 @@ class CreateCommand extends Command {
 
   @override
   FutureOr<dynamic>? run() {
-    final projectName = argResults?.option("project-name") ?? "new-project";
+    final projectName = argResults?.option("project-name") ?? "sandboxproj";
 
     _create(projectName);
   }

@@ -1,11 +1,12 @@
-import 'package:mini_flutter_tool/runner.dart';
+import 'package:Klutter/runner.dart';
 
 Future<void> main(List<String> args) async {
   try {
     await runner.run(args);
   } catch (e) {
-    print("Error running klutter!");
+    print(e);
     print(
-        "Run 'klutter -h' (or 'klutter <command> -h') for available klutter commands and options.");
+      "Run 'klutter -h' (or 'klutter <command> -h') for available klutter commands and options.",
+    );
   }
 }

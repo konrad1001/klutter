@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:mini_flutter_tool/src/macos/macos_device_discovery.dart';
-import 'package:mini_flutter_tool/src/macos/xcode.dart';
+import 'package:Klutter/src/macos/macos_device_discovery.dart';
+import 'package:Klutter/src/macos/xcode.dart';
 
 class RunCommand extends Command {
   final _xcode = Xcode();
@@ -62,7 +62,7 @@ class RunCommand extends Command {
 
   Directory? _buildExists(Directory projectDir) {
     final file = Directory(
-      '${projectDir.path}/ios/build/ios/Build/Products/Debug-iphonesimulator/Runner.app',
+      '${projectDir.path}/ios/build/Build/Products/Debug-iphonesimulator/Runner.app',
     );
     if (file.existsSync()) {
       return file;

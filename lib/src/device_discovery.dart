@@ -1,8 +1,6 @@
-import 'package:mini_flutter_tool/src/device.dart';
+import 'package:Klutter/src/device.dart';
 
-enum DeviceFilters {
-  simOnly;
-}
+enum DeviceFilters { simOnly }
 
 abstract class DeviceDiscovery {
   Future<List<Device>> getAllAvailableDevices({DeviceFilters? filter});

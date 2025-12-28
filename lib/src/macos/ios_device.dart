@@ -1,4 +1,4 @@
-import 'package:mini_flutter_tool/src/device.dart';
+import 'package:Klutter/src/device.dart';
 
 class IOSSimulator extends Device {
   IOSSimulator({required super.identifier, required super.name});

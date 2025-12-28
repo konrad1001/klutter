@@ -14,14 +14,14 @@ class Xcode {
       "-scheme",
       "Runner",
       "-destination",
-      "platform=iOS Simulator,name=iPhone 17",
+      "platform=iOS Simulator,name=$destination",
       "-derivedDataPath",
-      "build/ios",
+      "build",
       "build",
     ], workingDirectory: workingDirectory);
 
     if (result.exitCode != 0) {
-      print(result.stderr);
+      throw Exception("Error building project ${result.stderr}");
     }
   }
 
@@ -55,10 +55,8 @@ class Xcode {
     ], workingDirectory: workingDirectory);
 
     if (result.exitCode != 0) {
-      print(result.stderr);
+      throw Exception("Error launching project ${result.stderr}");
     }
-
-    print(result.stdout);
   }
 
   Future<void> bootSimulator({

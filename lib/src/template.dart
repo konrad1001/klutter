@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:mini_flutter_tool/src/environment.dart';
+import 'package:Klutter/src/environment.dart';
 
 class Template {
   final templateDirectory = "templates";

@@ -1,7 +1,7 @@
-import 'package:mini_flutter_tool/src/device.dart';
-import 'package:mini_flutter_tool/src/device_discovery.dart';
-import 'package:mini_flutter_tool/src/macos/ios_device.dart';
-import 'package:mini_flutter_tool/src/macos/xcode.dart';
+import 'package:Klutter/src/device.dart';
+import 'package:Klutter/src/device_discovery.dart';
+import 'package:Klutter/src/macos/ios_device.dart';
+import 'package:Klutter/src/macos/xcode.dart';
 
 class MacosDeviceDiscovery extends DeviceDiscovery {
   final _xcode = Xcode();
