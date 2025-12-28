@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:mini_flutter_tool/src/macos/xcode.dart';
+import 'package:Klutter/src/macos/xcode.dart';
 
 class BuildCommand extends Command {
   final _xcode = Xcode();
@@ -31,8 +31,19 @@ class BuildCommand extends Command {
     }
 
     final iosDir = Directory("ios");
+    final runnerDir = Directory("ios/Runner");
 
-    await _xcode.build(destination: "iPhone17", workingDirectory: iosDir.path);
+    // Build project
+    await Process.run("klutter", [
+      "compile",
+      "main.dart",
+      "-d",
+      runnerDir.path,
+    ]);
+    print("Wrote app.json");
+
+    // Build xcode
+    await _xcode.build(destination: "iPhone 17", workingDirectory: iosDir.path);
 
     print("Successfully built project");
   }

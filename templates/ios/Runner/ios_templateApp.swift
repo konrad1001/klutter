@@ -4,7 +4,7 @@ import SwiftUI
 struct ios_templateApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            KlutterView()
         }
     }
 }
